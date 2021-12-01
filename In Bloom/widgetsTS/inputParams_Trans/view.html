@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+<head>
+    <title>模型参数设置</title>
+    <meta name='description' content='模型参数设置' />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 移动设备 viewport -->
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <meta name="author" content="火星科技 http://cesium.marsgis.cn ">
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit">
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <link rel="icon" type="image/png" href="../../img/favicon/favicon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <link rel="icon" sizes="192x192" href="../../img/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="火星科技MarsGIS">
+    <!-- Win8标题栏及ICON图标 -->
+    <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png">
+    <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#62a8ea">
+
+    <!-- 第3方lib引入 -->
+    <script type="text/javascript" src="../../lib/include-lib.js" libpath="../../lib/"
+        include="jquery,jquery.mCustomScrollbar,echarts,admui-frame,layer"></script>
+
+    <link href="../../css/widget-win.css" rel="stylesheet" />
+    <link href="view.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="Box" style="height:1450px;overflow:auto;">
+        <div>
+            <!-- &nbsp;&nbsp;&nbsp;<a>绘制范围</a>>>><a>设置参数</a><br> -->
+
+            <table>
+                <tr>
+                    <td>
+                        <label for="Name">Title: </label>
+                    </td>
+                    <td>
+                        <input class="text_a" id="Name" type="text" value="未命名">
+                    </td>
+                <!-- </tr>
+                <tr> -->
+                    <td>
+                        <label for="Namespace">Model: </label>
+                    </td>
+                    <td>
+                        <select id="modelSelect">
+                            <option value="Lagrange">Lagrange</option>
+                            <option value="fBm">fBm</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <fieldset>
+                <legend>Model Basic Params</legend>
+                <table id="paramstable">
+                    <tr>
+                        <td>
+                            <label for="particleCnt">ParticleNum: </label>
+                        </td>
+                        <td>
+                            <input id="particleCnt" type="number" value=300 step=100><br>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="timeA">Simulation Period: </label>
+                        </td>
+                        <td>
+                            <input id="startTime" type="datetime-local" value=2013-07-01T00:00>
+                        </td>
+                        <td>
+                            <label for="timeB">To </label>
+                        </td>
+                        <td>
+                            <input id="stopTime" type="datetime-local" value=2013-07-01T07:00><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="timeStep">Time Step: </label>
+                        </td>
+                        <td>
+                            <select id="timeStep">
+                                <option value=60>60</option>
+                                <option value=30>30</option>
+                                <option value=20>20</option>
+                                <option value=15>15</option>
+                                <option value=10>10</option>
+                                <option value=5>5</option>
+                                <option value=1>1</option>
+                            </select>&nbsp;min
+                        </td>
+                        <td>
+                            <label for="strand">Adhesiveness: </label>
+                        </td>
+                        <td>
+                            <input id="strand" type="number" value=10>&nbsp;%<br>
+                        </td>
+                    </tr>
+                </table>
+                <table id="fBmdiv">
+                    <tr>
+                        <td>
+                            <label for="FbmStepSize">M: </label>
+                        </td>
+                        <td>
+                            <input id="FbmStepSize" type="number" value=120000 step=1000>&nbsp;
+                        </td>
+                        <td>
+                            <label for="hurst">Hurst: </label>
+                        </td>
+                        <td>
+                            <input id="hurst" type="number" value=0.7 step=0.1>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>Current Field Setting</legend>
+                <table>
+                    <tr>
+                        <td>
+                            <select id="currentmodelSelect">
+                                <option value="MIKE">MIKE</option>
+                                <option value="Delft3D">Delft3D</option>
+                            </select>
+                        </td>
+                        <td>
+                            <label for="currentCoef">CurrentCoef: </label>
+                            <input id="currentDragCoef" type="number" value=0.9 step=0.1 class="numinput">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>Wind Field Setting</legend>
+                <input type="checkbox" id="checkWind" value="checkbox">Use Wind Field
+                <div id="setWind">
+                    <table>
+                        <tr>
+                            <td>
+                                <select id="windmodelSelect">
+                                    <option value="WRF">WRFWind</option>
+                                    <option value="constwind">Custom Wind Field</option>
+                                    <option value="defaultwind">Preset Wind Field</option>
+                                </select>
+                            </td>
+                            <td id="WRFWind">
+                                <label for="windcoef">WindCoef: </label>
+                                <input id="windCoef" type="number" value=0.9 step=0.1 class="numinput">
+                            </td>
+                        </tr>
+                    </table>
+                    <table id="constWind">
+                        <tr>
+                            <td>
+                                <label for="windDragCoef">WindDragCoef: </label>
+                                <input id="windDragCoef" type="number" value=0.03 step=0.01 class="numinput">
+                            </td>
+                            <td>
+                                <label for="windSpeed">WindSpeed: </label><input id="windSpeed" type="number" value=4
+                                    class="numinput">&nbsp;m/s
+                            </td>
+                            <td>
+                                <label for="windDirection">WindDirection: </label><input id="windDirection" type="number" value=180
+                                    class="numinput">&nbsp;°
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Breeding Model Setting</legend>
+                <input type="checkbox" id="checkGrowth" value="checkbox">Use Growth Model
+
+                <div id="growthParams">
+
+                    <select id="growthAreaSelect">
+                        <option value="growthAreaNew">Custom Grow Area</option>
+                        <option value="growthAreaOld">Using Inital Area</option>
+                        <option value="growthDefault">Using Preset Params</option>
+                    </select>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<button id="drawGrowthArea" class="btn btn-primary">Draw Growth Area</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<label id="alreadyDrawn"></label>
+                    <table id="setGrowth">
+                        <tr>
+                            <td>
+                                <label for="growthMethods">GrowMode</label>
+                            </td>
+                            <td>
+                                <select id="growthMethods">
+                                    <option value="growUniform">Linear Speed</option>
+                                    <option value="growIndex">Index Speed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label for="growSpeed">GrowRate: </label>
+                            </td>
+                            <td>
+                                <input id="growSpeed" type="number" value=0.01
+                                    class="numinput">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="growStartTime">GrowStartTime: </label>
+                            </td>
+                            <td>
+                                <input id="growStartTime" type="datetime-local"
+                                    value=2013-07-01T00:00>
+                            </td>
+                            <td>
+                                <label for="growStopTime">GrowStopTime: </label>
+                            </td>
+                            <td>
+                                <input id="growStopTime" type="datetime-local"
+                                    value=2013-07-01T00:00>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="growStep">GrowTimeStep: </label>
+                            </td>
+                            <td>
+                                <input id="growStep" type="number" value=1
+                                    class="numinput">&nbsp;h
+                            </td>
+                        </tr>
+                    </table>
+
+                    <input type="checkbox" id="checkDecay" value="checkbox">Use Decay Model
+                    <table id="setDecay">
+                        <tr>
+                            <td>
+                                <label for="lifespan">Lifespan: </label>
+                            </td>
+                            <td>
+                                <input id="lifespan" type="number" value=24
+                                    class="numinput">&nbsp;h
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+            </fieldset>
+
+            <br>
+            <div id="myProgress">
+                <div id="myBar">0%</div>
+                <br>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;<button id="btn" class="btn btn-primary">Confirm</button>
+        </div>
+    </div>
+    <!--页面js-->
+    <script src="view.js"></script>
+</body>
+
+</html>

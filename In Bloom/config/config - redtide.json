@@ -1,0 +1,488 @@
+﻿{
+    "serverURL": "http://data.marsgis.cn/",
+    "map3d": {
+        "homeButton": true,
+        "sceneModePicker": true,
+        "navigationHelpButton": true,
+        "infoBox": false,
+        "vrButton": false,
+        "fullscreenButton": false,
+        "geocoder": false,
+        "showRenderLoopErrors": true,
+        "center": { "y": 39.503281, "x": 119.608257, "z": 259651.7, "heading": 357.3, "pitch": -90, "roll": 0 },
+        "minzoom": 1,
+        "maxzoom": 50000000,
+        "style": {
+            "atmosphere": true,
+            "lighting": false,
+            "fog": false,
+            "testTerrain": false
+        },
+        "mouseZoom": true,
+        "location": {
+            "crs": "",
+            "format" : "<div>Height: {height}m</div><div>Pitch: {pitch}°</div><div>Heading: {heading}°</div><div>Altitude: {z}m</div><div>Latitude: {y}</div><div>Longitude: {x}</div>"
+        },
+        "navigation": {
+            "legend": {
+                "right": "1px",
+                "bottom": "25px"
+            },
+            "compass": {
+                "top": "auto",
+                "bottom": "165px",
+                "right": "2px"
+            }
+        },
+        "terrain": {
+            "url": "$serverURL$/terrain",
+            "visible": true
+        },
+        "basemaps": [{
+                "id": 10,
+                "name": "地图底图",
+                "type": "group"
+            },
+            {
+                "pid": 10,
+                "name": "谷歌卫星",
+                "icon": "img/basemaps/google_img.png",
+                "type": "www_google",
+                "crs": "wgs84",
+                "layer": "img_d"
+            },
+            {
+                "pid": 10,
+                "name": "OSM",
+                "icon": "img/basemaps/osm.png",
+                "type": "www_osm"
+            },
+            {
+                "pid": 10,
+                "name": "ArcGIS卫星",
+                "icon": "img/basemaps/esriWorldImagery.png",
+                "type": "arcgis",
+                "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+                "enablePickFeatures": false,
+                "visible": true
+            },
+            {
+                "pid": 10,
+                "name": "微软卫星",
+                "icon": "img/basemaps/bingAerial.png",
+                "type": "www_bing",
+                "layer": "Aerial"
+            },
+            {
+                "pid": 10,
+                "name": "天地图卫星",
+                "icon": "img/basemaps/tdt_img.png",
+                "type": "www_tdt",
+                "layer": "img_d",
+                "key": [
+                    "313cd4b28ed520472e8b43de00b2de56",
+                    "83b36ded6b43b9bc81fbf617c40b83b5",
+                    "0ebd57f93a114d146a954da4ecae1e67",
+                    "6c99c7793f41fccc4bd595b03711913e",
+                    "56b81006f361f6406d0e940d2f89a39c"
+                ]
+            },
+            {
+                "pid": 10,
+                "name": "离线地图",
+                "type": "xyz",
+                "icon": "img/basemaps/gaode_img.png",
+                "url": "$serverURL$/wgs3857img/{z}/{x}/{y}.jpg"
+            },
+            {
+                "pid": 10,
+                "name": "单张图片",
+                "icon": "img/basemaps/stamenWatercolor.png",
+                "type": "image",
+                "url": "img/world/world.jpg",
+                "rectangle": {
+                    "xmin": -180,
+                    "xmax": 180,
+                    "ymin": -85,
+                    "ymax": 85
+                }
+            }
+        ],
+        "operationallayers": [{
+                "pid": 10,
+                "name": "天地图注记",
+                "type": "www_tdt",
+                "layer": "img_z",
+                "key": [
+                    "313cd4b28ed520472e8b43de00b2de56",
+                    "83b36ded6b43b9bc81fbf617c40b83b5",
+                    "0ebd57f93a114d146a954da4ecae1e67",
+                    "6c99c7793f41fccc4bd595b03711913e",
+                    "56b81006f361f6406d0e940d2f89a39c"
+                ],
+                "visible": false
+            },
+            {
+                "id": 60,
+                "name": "地形",
+                "type": "group"
+            },
+            {
+                "pid": 60,
+                "type": "terrain",
+                "name": "官方全球地形",
+                "url": ""
+            },
+            {
+                "pid": 60,
+                "type": "terrain",
+                "name": "MarsGIS地形",
+                "url": "$serverURL$/terrain"
+            },
+            {
+                "pid": 60,
+                "type": "terrain",
+                "name": "无地形",
+                "url": "ellipsoid"
+            },
+            {
+                "id": 50,
+                "name": "Auxiliary Layers",
+                "type": "group"
+            },
+            {
+                "pid": 50,
+                "type": "custom_graticule",
+                "name": "经纬网"
+            },
+            {
+                "id": 40,
+                "name": "栅格数据",
+                "type": "group"
+            },
+            {
+                "id": 4030,
+                "pid": 40,
+                "type": "group",
+                "name": "拉伸渲染"
+            },
+            {
+                "id": 30,
+                "name": "矢量数据",
+                "type": "group"
+            },
+
+            {
+                "id": 3030,
+                "pid": 30,
+                "name": "基础数据",
+                "type": "group"
+            },
+            {
+                "pid": 3030,
+                "type": "geojson",
+                "name": "省界线",
+                "url": "data/geojson/sheng-line.json",
+                "symbol": {
+                    "styleOptions": {
+                        "lineType": "solid",
+                        "color": "#ffffff",
+                        "width": 2,
+                        "opacity": 0.8
+                    }
+                },
+                "visible": false,
+                "flyTo": true
+            },
+            {
+                "id": 2050,
+                "pid": 20,
+                "name": "其他",
+                "type": "group"
+            }
+        ]
+    },
+    "widget": {
+        "debugger": false,
+        "version": "20190418",
+        "defaultOptions": {
+            "style": "dark",
+            "windowOptions": {
+                "skin": "layer-mars-dialog animation-scale-up",
+                "position": {
+                    "top": 120,
+                    "right": 10
+                },
+                "maxmin": true,
+                "resize": true
+            },
+            "autoDisable": true,
+            "disableOther": true
+        },
+        "widgets": [{
+                "name": "模板",
+                "type": "group",
+                "children": [{
+                        "name": "iframe弹窗模板",
+                        "uri": "widgets/_example/widget.js",
+                        "windowOptions": {
+                            "width": 300,
+                            "height": 400,
+                            "position": {
+                                "bottom": 10,
+                                "right": 10
+                            },
+                            "maxmin": true,
+                            "resize": true
+                        },
+                        "openAtStart": false
+                    },
+                    {
+                        "name": "div弹窗模板",
+                        "uri": "widgets/_example_divwin/widget.js"
+                    },
+                    {
+                        "name": "append模板",
+                        "uri": "widgets/_example_append/widget.js"
+                    },
+                    {
+                        "name": "局部三维",
+                        "uri": "widgets/localTerrein/widget.js"
+                    }
+                ]
+            },
+            {
+                "name": "地图工具",
+                "type": "group",
+                "children": [{
+                        "id": "drawInitialArea",
+                        "name": "Set Initial Area",
+                        "uri": "widgetsTS/drawInitialArea/widget.js",
+                        "group": "forlayer",
+                        "autoDisable": true,
+                        "disableOther": true
+                    },
+                    {
+                        "id": "inputParamsTrans",
+                        "name": "Set Model Parameters",
+                        "uri": "widgetsTS/inputParams_Trans/widget.js",
+                        "group": "forlayer",
+                        "autoDisable": true,
+                        "disableOther": true
+                    },
+                    {
+                        "id": "historyReview",
+                        "name": "Task History",
+                        "uri": "widgetsTS/historyReview/widget.js",
+                        "group": "forlayer",
+                        "autoDisable": true,
+                        "disableOther": true
+                    },
+                    {
+                        "id": "manageBasemaps",
+                        "name": "Manage Basemaps",
+                        "uri": "widgets/manageBasemaps/widget.js",
+                        "group": "forlayer",
+                        "autoDisable": true,
+                        "disableOther": true,
+                        "windowOptions": {
+                            "position": {
+                                "top": 800,
+                                "right": 200
+                            }
+                        }
+                    },
+                    {
+                        "name": "Auxiliary Layers",
+                        "uri": "widgets/manageLayers/widget.js",
+                        "group": "forlayer",
+                        "autoCenter": true,
+                        "windowOptions": {
+                            "position": {
+                                "top": 50,
+                                "right": 200
+                            }
+                        },
+                        "autoDisable": true,
+                        "disableOther": true
+                    },
+                    {
+                        "name": "Measurement",
+                        "uri": "widgets/measure/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "bottom": 30,
+                                "right": 200
+                            }
+                        }
+                    },
+                    {
+                        "name": "Profile Analysis",
+                        "uri": "widgets/section/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "bottom": 30,
+                                "right": 200
+                            }
+                        }
+                    },
+                    {
+                        "name": "Profile Analysis图表",
+                        "uri": "widgets/sectionChars/widget.js",
+                        "windowOptions": {
+                            "noTitle": true,
+                            "position": {
+                                "top": 10,
+                                "left": 10,
+                                "right": 10
+                            }
+                        },
+                        "disableOther": false
+                    },
+                    {
+                        "name": "View Bookmark",
+                        "uri": "widgets/bookmark/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "top": 800,
+                                "right": 200
+                            }
+                        }
+                    },
+                    {
+                        "name": "Coordinate Positioning",
+                        "uri": "widgets/centerXY/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "top": 800,
+                                "right": 200
+                            }
+                        }
+                    },
+                    {
+                        "name": "Add Marker",
+                        "uri": "widgets/addmarker/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "top": 800,
+                                "right": 200
+                            }
+                        }
+                    },
+                    {
+                        "name": "Navigator",
+                        "uri": "widgets/navXZQH/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "top": 800,
+                                "right": 200
+                            }
+                        }
+                    },
+                    {
+                        "name": "漫游路线设置",
+                        "uri": "widgets/roamLine/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "top": 45,
+                                "bottom": 30,
+                                "right": 5
+                            }
+                        }
+                    },
+                    {
+                        "name": "漫游路线",
+                        "uri": "widgets/roamFly/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "bottom": 60,
+                                "right": 5
+                            }
+                        }
+                    },
+                    {
+                        "name": "路线剖面",
+                        "uri": "widgets/roamChars/widget.js",
+                        "windowOptions": {
+                            "noTitle": true,
+                            "position": {
+                                "top": 10,
+                                "left": 10,
+                                "right": 10
+                            }
+                        },
+                        "disableOther": false
+                    },
+                    {
+                        "name": "双屏对比",
+                        "uri": "widgets/mapCompare/widget.js",
+                        "autoDisable": false,
+                        "disableOther": false
+                    },
+                    {
+                        "name": "卷帘对比",
+                        "uri": "widgets/mapSwipe/widget.js",
+                        "autoDisable": false,
+                        "disableOther": false
+                    },
+                    {
+                        "name": "粒子效果",
+                        "uri": "widgets/particalSystem/widget.js"
+                    },
+                    {
+                        "name": "街景",
+                        "uri": "widgets/streetscape/widget.js"
+                    },
+                    {
+                        "name": "标绘",
+                        "uri": "widgets/plot/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "top": 45,
+                                "bottom": 30,
+                                "right": 5
+                            }
+                        },
+                        "openAtStart": false
+                    },
+                    {
+                        "name": "打印",
+                        "uri": "widgets/print/widget.js",
+                        "autoDisable": false,
+                        "disableOther": false
+                    },
+                    {
+                        "name": "分享当前地图位置",
+                        "uri": "widgets/shareUrl/widget.js",
+                        "windowOptions": {
+                            "position": {
+                                "top": 1,
+                                "left": 250,
+                                "right": 250
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "业务演示功能",
+                "type": "group",
+                "children": [{
+                    "name": "Set Model Parameters",
+                    "uri": "widgetsTS/inputParams/widget.js",
+                    "group": "forlayer",
+                    "autoCenter": true,
+                    "windowOptions": {
+                        "position": {
+                            "top": 50,
+                            "bottom": 30,
+                            "right": 10
+                        }
+                    },
+                    "autoDisable": false,
+                    "disableOther": false
+                }]
+            }
+        ]
+    }
+}

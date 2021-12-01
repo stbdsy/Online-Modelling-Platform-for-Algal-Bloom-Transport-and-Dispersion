@@ -1,0 +1,133 @@
+#container-fluid {
+    position: absolute;
+    width: 400px;
+    /* height: 120px; */
+    left: 25px;
+    top: 95px;
+    opacity: 1;
+    transform: rotate(0deg);
+    z-index: 2;
+    font-size: 20px;
+}
+
+#container-fluid2 {
+    position: absolute;
+    width: 400px;
+    /* height: 120px; */
+    left: 25px;
+    top: 600px;
+    opacity: 1;
+    transform: rotate(0deg);
+    z-index: 2;
+    font-size: 20px;
+}
+
+#container-fluid3 {
+    position: absolute;
+    width: 300px;
+    /* height: 120px; */
+    right: 25px;
+    top: 95px;
+    opacity: 1;
+    transform: rotate(0deg);
+    z-index: 2;
+    font-size: 20px;
+}
+
+#container-fluid4 {
+    position: absolute;
+    width: 300px;
+    /* height: 120px; */
+    right: 25px;
+    top: 600px;
+    opacity: 1;
+    transform: rotate(0deg);
+    z-index: 2;
+    font-size: 20px;
+}
+
+a:hover {
+    background-color: #7984868a;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#a2 {
+    background-color: #7984868a;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    bottom: 0px;
+    margin-left: 310px;
+}
+
+a2:hover {
+    background-color: #7984868a;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#well {
+    position: absolute;
+    width: 25px;
+    height: 100%;
+    opacity: 1;
+    transform: rotate(0deg);
+    font-size: 18px;
+    background-color: #2791ceb3;
+    border-radius: 9px;
+    z-index: -10;
+    left: -4px;
+}
+
+#btn1 {
+    left: 15px;
+    bottom: 80px;
+    background-color: gold;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.menu-text {
+    font-size: .7em;
+    line-height: 1.8;
+    max-height: 25px;
+}
+
+#time-toolbar {
+    position: absolute;
+    left: 35%;
+    margin: -25% 0 0 -25%;
+}
+
+#time-toolbar {
+    width: 1000px;
+    left: 50%;
+    border-radius: 9px;
+    background-color: #114b6254;
+}
+
+#btn_group {
+    text-align: center;
+}
+
+#timetext {
+    border-radius: 9px;
+    width: 170px;
+    text-align: center;
+    background-color: #198bafc7!important;
+    border-color: #198bafc7;
+    border-top-color: #198bafc7;
+    border-bottom-color: #198bafc7;
+    border-left-color: #198bafc7;
+    border-right-color: #198bafc7;
+}
+
+#time_slider {
+    width: 860px;
+    margin: 0% auto;
+}
+
+#windy_btn {
+    border-radius: 1px;
+}

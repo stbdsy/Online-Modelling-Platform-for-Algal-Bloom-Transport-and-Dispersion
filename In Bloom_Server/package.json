@@ -1,0 +1,25 @@
+{
+  "name": "project",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "@turf/turf": "^5.1.6",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "d3": "^5.15.1",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "glob": "^7.1.6",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
+    "nodejs-websocket": "^1.7.2",
+    "nodemon": "^2.0.2",
+    "step": "^1.0.0",
+    "ws": "^3.3.2"
+  }
+}

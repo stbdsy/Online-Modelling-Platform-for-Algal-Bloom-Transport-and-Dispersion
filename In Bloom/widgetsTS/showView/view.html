@@ -1,0 +1,334 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+<head>
+    <title>弹窗子页面</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 移动设备 viewport -->
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <meta name="author" content="火星科技  http://cesium.marsgis.cn">
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit">
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <link rel="icon" type="image/png" href="../../img/favicon/favicon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="火星科技 ">
+    <!-- Win8标题栏及ICON图标 -->
+    <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png">
+    <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#62a8ea">
+
+    <!-- 第3方lib引入 -->
+    <script type="text/javascript" src="../../lib/include-lib.js?time=20190418" libpath="../../lib/"
+        include="jquery,font-awesome,bootstrap,echarts,admui-frame"></script>
+    <link href="../../css/widget-win.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <div id="echartsView" style="width:100%;height:100%;"></div>
+
+
+    <script>
+        var thisWidget;
+        $.ajaxSettings.async = false;
+
+        //当前页面业务
+        function initWidgetView(_thisWidget) {
+            thisWidget = _thisWidget;
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('echartsView'), 'dark');
+            // 指定图表的配置项和数据
+            var option = getOption();
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+
+
+        function getOption() {
+            // var TmpData = (function () {
+            //     var data = [];
+            //     Date.prototype.getHM = function (format) {
+            //         return this.getHours() + ":" + this.getMinutes();
+            //     }
+            //     var date = new Date();
+            //     for (var i = 1; i < 13; i++) {
+            //         var tmp = {};
+            //         tmp['time'] = i + '月';
+            //         tmp['client'] = Math.floor(Math.random() * 20) + 30;//30~50个
+            //         tmp['fair'] = Math.floor(tmp['client'] * (Math.random() / 10));//不大于10%
+            //         tmp['good'] = Math.floor((tmp['client'] - tmp['fair']) * (Math.random() / 3));//剩余部分不大于1/3
+            //         tmp['best'] = tmp['client'] - tmp['good'] - tmp['fair'];//剩下的
+            //         data.push(tmp);
+            //     }
+            //     return data;
+            // })();
+
+            var TmpData = (function () {
+                var data = [];
+                var pointNum0 = [];
+                var pointNum2 = [];
+                var pointNum4 = [];
+                var datetime = [];
+                Date.prototype.getHM = function (format) {
+                    return this.getHours() + ":" + this.getMinutes();
+                }
+                var date = new Date();
+                baseUrlConfig = thisWidget.getbaseUrlConfig();
+                dir_getParticles = thisWidget.getdir_getParticles();
+                $.post(baseUrlConfig['serverport'] + "fsReadNum", { 'Dir': 'data//' + dir_getParticles + "//" }, function (response) {
+                    // for (var i = 0; i < response.length; i = i + 4) {
+                    var ttt = Math.round(response.length/4/15)
+                    if (ttt>0){
+                        ttt = ttt*4
+                    }else{
+                        ttt = 4
+                    }
+                    for (var i = 0; i < response.length; i = i + ttt) {
+                        pointNum0.push(response[i]);
+                        pointNum2.push(response[i + 1]);
+                        pointNum4.push(response[i + 2]);
+                        temp = response[i + 3];
+                        datetime.push(temp.split("_")[0]);
+                    }
+                });
+                for (var i = 0; i < datetime.length; i++) {
+                    var tmp = {};
+                    tmp['time'] = thisWidget.getTime(datetime[i]);
+                    tmp['client'] = pointNum0[i] + pointNum2[i] + pointNum4[i]
+                    tmp['best'] = pointNum0[i]
+                    tmp['good'] = pointNum2[i]
+                    tmp['fair'] = pointNum4[i]
+                    data.push(tmp);
+                }
+                return data;
+            })();
+
+            var xData = function () {
+                var data = [];
+                for (var i = 1; i < TmpData.length; i++) {
+                    data.push(TmpData[i]['time']);
+                }
+                return data;
+            }();
+
+            var clientData = function () {
+                var data = [];
+                for (var i = 1; i < TmpData.length; i++) {
+                    data.push(TmpData[i]['client']);
+                }
+                return data;
+            }();
+
+            var bestData = function () {
+                var data = [];
+                for (var i = 1; i < TmpData.length; i++) {
+                    data.push(TmpData[i]['best']);
+                }
+                return data;
+            }();
+
+            var goodData = function () {
+                var data = [];
+                for (var i = 1; i < TmpData.length; i++) {
+                    data.push(TmpData[i]['good']);
+                }
+                return data;
+            }();
+
+            var fairData = function () {
+                var data = [];
+                for (var i = 1; i < TmpData.length; i++) {
+                    data.push(TmpData[i]['fair']);
+                }
+                return data;
+            }();
+
+            option = {
+                //backgroundColor: "#344b58",
+                //"title": {
+                //    "text": "终端数量",
+                //    x: "4%",
+
+                //    textStyle: {
+                //        color: '#446699',
+                //        fontSize: '14'
+                //    }
+                //},
+                "tooltip": {
+                    "trigger": "axis",
+                    "axisPointer": {
+                        "type": "shadow",
+                        textStyle: {
+                            color: "#fff"
+                        }
+
+                    },
+                },
+                toolbox: {
+                    feature: {
+                        dataView: { show: true, readOnly: false },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                "grid": {
+                    "borderWidth": 0,
+                    "top": '15%',
+                    "bottom": '15%',
+                    textStyle: {
+                        color: "#fff"
+                    }
+                },
+                "legend": {
+                    x: '10%',
+                    top: '2%',
+                    textStyle: {
+                        color: '#90979c',
+                    },
+                    "data": ['悬浮量', '附着量', '消亡量', '总数']
+                },
+
+
+                "calculable": true,
+                "xAxis": [{
+                    "type": "category",
+                    "axisLine": {
+                        lineStyle: {
+                            color: '#90979c'
+                        }
+                    },
+                    "splitLine": {
+                        "show": false
+                    },
+                    "axisTick": {
+                        "show": false
+                    },
+                    "splitArea": {
+                        "show": false
+                    },
+                    "axisLabel": {
+                        "interval": 0,
+                    },
+                    "data": xData,
+                }],
+                "yAxis": [{
+                    "type": "value",
+                    "splitLine": {
+                        "show": false
+                    },
+                    "axisLine": {
+                        lineStyle: {
+                            color: '#90979c'
+                        }
+                    },
+                    "axisTick": {
+                        "show": false
+                    },
+                    "axisLabel": {
+                        "interval": 0,
+
+                    },
+                    "splitArea": {
+                        "show": false
+                    },
+
+                }],
+
+                "series": [{
+                    "name": "悬浮量",
+                    "type": "bar",
+                    "stack": "总数",
+                    "barMaxWidth": 25,
+                    "barGap": "20%",
+                    "itemStyle": {
+                        "normal": {
+                            "color": "#1F77B4",
+                            "label": {
+                                "show": true,
+                                "textStyle": {
+                                    "color": "#fff"
+                                },
+                                "position": "insideTop",
+                                formatter: function (p) {
+                                    return p.value > 0 ? (p.value) : '';
+                                }
+                            }
+                        }
+                    },
+                    "data": bestData,
+                }, {
+                    "name": "附着量",
+                    "type": "bar",
+                    "stack": "总数",
+                    "itemStyle": {
+                        "normal": {
+                            "color": "#FF7F0E",
+                            "barBorderRadius": 0,
+                            "label": {
+                                "show": true,
+                                "position": "inside",
+                                formatter: function (p) {
+                                    return p.value > 0 ? (p.value) : '';
+                                }
+                            }
+                        }
+                    },
+                    "data": goodData
+                }, {
+                    "name": "消亡量",
+                    "type": "bar",
+                    "stack": "总数",
+                    "itemStyle": {
+                        "normal": {
+                            "color": "#2CA02C",
+                            "barBorderRadius": 0,
+                            "label": {
+                                "show": true,
+                                "position": "top",
+                                formatter: function (p) {
+                                    return p.value > 0 ? (p.value) : '';
+                                }
+                            }
+                        }
+                    },
+                    "data": fairData
+                }, {
+                    "name": "总数",
+                    "type": "line",
+                    "stack": "总数",
+                    symbolSize: 8,
+                    symbol: 'circle',
+                    "itemStyle": {
+                        "normal": {
+                            "color": "#6ca7e2",
+                            "barBorderRadius": 0,
+                            "label": {
+                                "show": true,
+                                "position": "top",
+                                formatter: function (p) {
+                                    return p.value > 0 ? (p.value) : '';
+                                }
+                            }
+                        }
+                    },
+                    "data": clientData
+                },
+                ]
+            }
+            return option;
+        }
+
+
+    </script>
+</body>
+
+</html>

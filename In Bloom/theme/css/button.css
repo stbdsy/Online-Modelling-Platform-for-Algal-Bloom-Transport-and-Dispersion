@@ -1,0 +1,45 @@
+#first{
+    position: absolute;
+    width: 10px;
+    left: 5px;
+    top: 50px;
+    opacity: 1;
+    transform:rotate(0deg);
+    z-index: 2;
+}
+#second{
+    position: absolute;
+    width:  10px;
+    height: 10px;
+    left: 5px;
+    top: 50px;
+    /* left: -100px;
+    top: -100px; */
+    transform:rotate(0deg);
+    opacity: 1;
+    z-index: 2;
+}
+#third{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 5px;
+    top: 50px;
+    /* left: -100px;
+    top: -100px; */
+    transform:rotate(0deg);
+    opacity: 1;
+    z-index: 2;
+}
+#fourth{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 5px;
+    top: 50px;
+    /* left: -100px;
+    top: -100px; */
+    transform:rotate(0deg);
+    opacity: 1;
+    z-index: 2;
+}

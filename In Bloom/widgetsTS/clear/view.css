@@ -1,0 +1,12 @@
+.querybar-ssk2 {
+    position: absolute;
+    right:10px;
+    top:200px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background-color: rgba(35, 68, 117, 0.85);
+}

@@ -1,0 +1,6 @@
+[ RowDataPacket {
+    username: 'admin',
+    userid: 2,
+    password: 'admin',
+    clearance: '0' } ]
+[0mPOST /login [32m200 [0m11.387 ms - 4[0m

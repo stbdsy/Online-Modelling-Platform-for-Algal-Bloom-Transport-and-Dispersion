@@ -1,0 +1,12 @@
+Application has thrown an uncaught exception and is terminated:
+TypeError: Cannot read property 'type' of null
+    at geomEach (D:\green_tide_server\node_modules\@turf\turf\turf.js:1230:39)
+    at geomReduce (D:\green_tide_server\node_modules\@turf\turf\turf.js:1343:5)
+    at Object.area$1 [as area] (D:\green_tide_server\node_modules\@turf\turf\turf.js:10461:12)
+    at discretization (D:\green_tide_server\controllers\common\websocket.js:789:21)
+    at Connection.<anonymous> (D:\green_tide_server\controllers\common\websocket.js:24:9)
+    at emitOne (events.js:116:13)
+    at Connection.emit (events.js:211:7)
+    at Connection.processFrame (D:\green_tide_server\node_modules\nodejs-websocket\Connection.js:621:9)
+    at Connection.extractFrame (D:\green_tide_server\node_modules\nodejs-websocket\Connection.js:562:14)
+    at Connection.doRead (D:\green_tide_server\node_modules\nodejs-websocket\Connection.js:254:23)

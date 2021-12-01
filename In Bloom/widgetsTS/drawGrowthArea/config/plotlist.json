@@ -1,0 +1,8 @@
+{
+    "二维平面类": [
+        { "name": "贴地面", "image": "$plot$/img/icon/polygon_clampToGround.jpg", "type": "polygon", "edittype": "polygon_clampToGround" },
+        { "name": "贴地矩形", "image": "$plot$/img/icon/rectangle_clampToGround.jpg", "type": "rectangle", "edittype": "rectangle_clampToGround" },
+        { "name": "贴地圆", "image": "$plot$/img/icon/circle_clampToGround.jpg", "type": "circle", "edittype": "circle_clampToGround" },
+        { "name": "贴地椭圆", "image": "$plot$/img/icon/ellipse_clampToGround.jpg", "type": "ellipse", "edittype": "ellipse_clampToGround" }
+    ]
+}

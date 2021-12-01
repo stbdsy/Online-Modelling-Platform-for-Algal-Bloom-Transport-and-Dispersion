@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+<head>
+    <title>三维地球</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 移动设备 viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <meta name="author" content="火星科技 http://cesium.marsgis.cn ">
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit">
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <link rel="icon" type="image/png" href="img/favicon/favicon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="火星科技 MarsGIS">
+    <!-- Win8标题栏及ICON图标 -->
+    <link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon.png">
+    <meta name="msapplication-TileImage" content="img/favicon/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#62a8ea">
+
+
+
+
+    <!--第三方lib-->
+    <script type="text/javascript" src="lib/include-lib.js?time=20190418" libpath="lib/" include="jquery,colorpicker,bootstrap,bootstrap-checkbox,bootstrap-datetimepicker,font-awesome,web-icons,layer,haoutil,nprogress,toastr,admui,turf,echarts-gl,cesium-mars,green-tide-windy,green-tide-pcolor">
+    </script>
+    <link href="css/style.css?time=20190418" rel="stylesheet" />
+    <!--concave-->
+    <script src="lib/concave/hull.js"></script>
+    <!-- heatmap -->
+    <script src="lib/CesiumPlugins/heatmap/heatmap.min.js"></script>
+    <script src="lib/CesiumPlugins/heatmap/HeatmapImageryProvider.js"></script>
+    <script src="data/outline_84.js"></script>
+    <!-- ion_rangeslider -->
+    <script src="lib/ion_rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+    <link href="lib/ion_rangeslider/2.3.1/css/ion.rangeSlider.min.css" rel="stylesheet" />
+    <link href='css/button.css' type='text/css' rel='stylesheet' />
+</head>
+
+<body class="dark">
+    <div id="loadOverlay" class='loadingOverlay'>
+        <ul id="loadbar" class="ins">
+            <li>
+                <div id="loadinglayer1" class="ball"></div>
+                <div id="loadinglayer7" class="pulse"></div>
+            </li>
+            <li>
+                <div id="loadinglayer2" class="ball"></div>
+                <div id="loadinglayer8" class="pulse"></div>
+            </li>
+            <li>
+                <div id="loadinglayer3" class="ball"></div>
+                <div id="loadinglayer9" class="pulse"></div>
+            </li>
+            <li>
+                <div id="loadinglayer4" class="ball"></div>
+                <div id="loadinglayer10" class="pulse"></div>
+            </li>
+            <li>
+                <div id="loadinglayer5" class="ball"></div>
+                <div id="loadinglayer11" class="pulse"></div>
+            </li>
+        </ul>
+    </div>
+    <div id="mask" class="signmask"></div>
+    <div id="time-toolbar" class="rightinfoview" style="display:none">
+        <div id="time_slider">
+            <input type="text" class="js-range-slider-sharp" name="my_range" data-bind="value: nowtimeparse, valueUpdate: 'input'" />
+        </div>
+        <br>
+        <div id="btn_group">
+            <a id="gopre" class="fa fa-fast-backward" aria-hidden="true"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="pre" class="fa  fa-step-backward" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="play" class="fa fa-play-circle-o" aria-hidden="true"> Play</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="next" class="fa fa-step-forward" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="gonext" class="fa fa-fast-forward" aria-hidden="true"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input id="timetext" type="datetime-local" size="30" data-bind='value: nowtime'>
+        </div>
+    </div>
+    <div id="concave-toolbar" class="infoview" style="display: none;font-size: 20px;">
+        <h4 class=" title" style="font-size: 22px;">Parameter setting of algal bloom area estimation</h4>
+        <table class="yybz_atable">
+            <tbody>
+                <tr>
+                    <td>maxDistance: </td>
+                    <td>
+                        <input type="range" min="1" max="5" step="0.1" data-bind="value: maxDistance, valueUpdate: 'input'">
+                    </td>
+                    <td>
+                        <input type="text" size="5" data-bind="value: maxDistance">
+                    </td>
+                </tr>
+                <tr>
+                    <td>minPoints：</td>
+                    <td>
+                        <input type="range" min="3" max="10" step="1" data-bind="value: minPoints, valueUpdate: 'input'">
+                    </td>
+                    <td>
+                        <input type="text" size="5" data-bind="value: minPoints">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Concave parameters: </td>
+                    <td>
+                        <input type="range" min="0" max="0.5" step="0.01" data-bind="value: concavity, valueUpdate: 'input'">
+                    </td>
+                    <td>
+                        <input type="text" size="5" data-bind="value: concavity">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Color Select：</td>
+                    <td>
+                        <input id="color-picker" type="text" size="5" data-bind="value: mycolor">
+                        <button id="change_color" type="button" class="btn btn-primary">Change</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Estimation of algal bloom area:&nbsp;</td>
+                    <td>
+                        <input type="text" readonly="readonly" size="5" id="arealabel" style="width:80px">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="windy-toolbar" class="infoview" style="display: none">
+        <h4 class="title">windy参数调整</h4>
+        <table class="yybz_atable">
+            <tbody>
+                <tr>
+                    <td>粒子数：</td>
+                    <td>
+                        <input type="range" min="0" max="10000" step="500" data-bind="value: particlesNumber, valueUpdate: 'input'">
+                    </td>
+                    <td>
+                        <input type="text" size="5" data-bind="value: particlesNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <td>线宽：</td>
+                    <td>
+                        <input type="range" min="1" max="10" step="0.2" data-bind="value: lineWidth, valueUpdate: 'input'">
+                    </td>
+                    <td>
+                        <input type="text" size="5" data-bind="value: lineWidth">
+                    </td>
+                </tr>
+                <tr>
+                    <td>移动速率：</td>
+                    <td>
+                        <input type="range" min="0" max="100" step="0.2" data-bind="value: speedRate, valueUpdate: 'input'">
+                    </td>
+                    <td>
+                        <input type="text" size="5" data-bind="value: speedRate">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>存活时间：</td>
+                    <td>
+                        <input type="range" min="0" max="300" step="1" data-bind="value: maxAge, valueUpdate: 'input'">
+                    </td>
+                    <td>
+                        <input type="text" size="5" data-bind="value:  maxAge">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="heatmap-toolbar" class="infoview" style="display: none">
+        <h4 class=" title">热力图参数调整</h4>
+        <table class="yybz_atable">
+            <tbody>
+                <tr>
+                    <td>radius</td>
+                    <td>
+                        <input type="range" min="30" max="150" step="1" data-bind="value: radius, valueUpdate: 'input'">
+                    </td>
+                    <td>
+                        <input type="text" size="5" data-bind="value: radius">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="centerDiv" style="font-size: 20px;">
+        <div id="cesiumContainer" class="cesium-container"></div>
+        <div id="colorbarContainer" style="position: absolute;height: 120px;right:80px;top:81%;display: none;text-align:center">
+            <label id="max"></label>
+            <br>
+            <img id="soundgradient" style="width:20px;height: 100px;">
+            <br>
+            <label id="min"></label>
+        </div>
+        <div id="kdecolorbarContainer" style="position: absolute;height: 120px;right:300px;top:81%;display: none; ">
+            <label style="position: absolute;left:50px;top:15px">High</label>
+            <label style="position: absolute;left:50px;top:60px">Medium</label>
+            <label style="position: absolute;left:50px;top:110px">Low</label>
+            <img id="kdesoundgradient" style="width:20px;height: 100px;position: absolute;left:25px;top: 27px; ">
+
+        </div>
+        <div>
+            <div id="container-fluid" readonly="readonly">
+                <div id="well"></div>
+                <div class="accordion-heading">
+                    <a id="current" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                        <div class="fa fa-plus-square-o" aria-hidden="true"></div>
+                        &nbsp;Layers
+                    </a>
+                </div>
+                <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+                    <div class="accordion-inner">
+                        <a id="windy_btn" class="fa fa-ils" aria-hidden="true">&nbsp;&nbsp;Currents&Winds(streamline)</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="arrow_btn" class="fa fa-yelp" aria-hidden="true">&nbsp;&nbsp;Currents&Winds(glyphs)</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="pcolor_btn" class="fa fa-xing" aria-hidden="true">&nbsp;&nbsp;Currents&Winds(stretched map)</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="contourf_btn" class="fa fa-forumbee" aria-hidden="true">&nbsp;&nbsp;Currents&Winds(hierarchical map)</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="chla_btn" class="fa fa-copyright" aria-hidden="true">&nbsp;&nbsp;Chl-a Concentration</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="cut_btn" class="fa fa-globe" aria-hidden="true">&nbsp;&nbsp;GOCI Images</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="stt_btn" class="fa fa-anchor" aria-hidden="true">&nbsp;&nbsp;Stations</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="initLct_btn" class="fa fa-paw" aria-hidden="true">&nbsp;&nbsp;Initial Location</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="HABParticles_btn" class="fa fa-superpowers" aria-hidden="true">&nbsp;&nbsp;HAB Particles</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="container-fluid2" readonly="readonly">
+                <div id="well"></div>
+                <div class="accordion-heading">
+                    <a id="current" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                        <div class="fa fa-plus-square-o" aria-hidden="true"></div>
+                        &nbsp;HAB Modelling
+                    </a>
+                </div>
+                <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
+                    <div class="accordion-inner">
+                        <a2 id="newtask_btn" class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;&nbsp;New Simulation</a2>
+                    </div>
+                    <div class="accordion-inner">
+                        <a2 id="oldtask_btn" class="fa fa-table" aria-hidden="true">&nbsp;&nbsp;Simulation Review</a2>
+                    </div>
+                </div>
+            </div>
+
+            <div id="container-fluid3" readonly="readonly">
+                <div id="well"></div>
+                <div class="accordion-heading">
+                    <a id="current" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                        <div class="fa fa-plus-square-o" aria-hidden="true"></div>
+                        &nbsp;Analysis Tools
+                    </a>
+                </div>
+                <div id="collapseThree" class="accordion-body collapse" style="height: 0px; ">
+                    <div class="accordion-inner">
+                        <a2 id="track_btn" class="fa fa-tasks" aria-hidden="true">&nbsp;&nbsp;Particle Trajectory</a2>
+                    </div>
+                    <div class="accordion-inner">
+                        <a2 id="envelop_btn" class="fa fa-life-ring" aria-hidden="true">&nbsp;&nbsp;Impacted Area Estimation</a2>
+                    </div>
+                    <div class="accordion-inner">
+                        <a2 id="heatmap_btn" class="fa fa-suitcase" aria-hidden="true">&nbsp;&nbsp;Risk Assessment</a2>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="insitu_btn" class="fa fa-database" aria-hidden="true">&nbsp;&nbsp;Measured Data</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="biomass_btn" class="fa fa-area-chart" aria-hidden="true">&nbsp;&nbsp;Biomass Statistics</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="densityMon_btn" class="fa fa-bar-chart" aria-hidden="true">&nbsp;&nbsp;Site Estimation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="container-fluid4" readonly="readonly">
+                <div id="well"></div>
+                <div class="accordion-heading">
+                    <a id="current" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+                        <div class="fa fa-plus-square-o" aria-hidden="true"></div>
+                        &nbsp;GIS Tools
+                    </a>
+                </div>
+                <div id="collapseFour" class="accordion-body collapse" style="height: 0px; ">
+                    <div class="accordion-inner">
+                        <a2 id="manageBasemaps_btn" class="fa fa-sticky-note-o" aria-hidden="true">&nbsp;&nbsp;Basemap</a2>
+                    </div>
+                    <div class="accordion-inner">
+                        <a2 id="measure_btn" class="fa fa-tachometer" aria-hidden="true">&nbsp;&nbsp;Measurement</a2>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="centerXY_btn" class="fa fa-map" aria-hidden="true">&nbsp;&nbsp;Positioning</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="section_btn" class="fa fa-calendar-minus-o" aria-hidden="true">&nbsp;&nbsp;Profile Analysis</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="bookmark_btn" class="fa fa-flag" aria-hidden="true">&nbsp;&nbsp;Visual Angle</a>
+                    </div>
+                    <div class="accordion-inner">
+                        <a id="addmarker_btn" class="fa fa-certificate" aria-hidden="true">&nbsp;&nbsp;Marks</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <i id="btn1" class="fa fa-ils" aria-hidden="true"></i> -->
+            <div style="position: absolute;left: 25px;bottom: 75px;display: none;font-size: 20px;" id="particleLegend">
+                <table>
+                    <tr>
+                        <td>
+                            Initial normal Particles
+                        </td>
+                        <td>
+                            <div id="d1" style="width:10px;height:10px;border-radius: 5px;margin: 5px 10px 03px 10px;background: #87CEFA;">
+                            <!-- <div id="d1" style="width:10px;height:10px;border-radius: 5px;margin: 5px 10px 03px 10px;background: #D2691E;"> -->
+
+                            </div>
+                        </td>
+                        <td>
+                            <label id="p1_cnt" style="margin-bottom:0px"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Adhesive Particles
+                        </td>
+                        <td>
+                            <div id="d1" style="width:10px;height:10px;border-radius: 5px;margin: 5px 10px 03px 10px;background: #20B2AA;">
+                            </div>
+                        </td>
+                        <td>
+                            <label id="p2_cnt" style="margin-bottom:0px"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Newly released Particles
+                        </td>
+                        <td>
+                            <!--<div id="d1"
+                                 style="width:10px;height:10px;border-radius: 5px;margin: 5px 10px 03px 10px;background: #7FFFD4;"> -->
+                            <div id="d1" style="width:10px;height:10px;border-radius: 5px;margin: 5px 10px 03px 10px;background: rgb(96, 255, 68);">
+                            </div>
+                        </td>
+                        <td>
+                            <label id="p3_cnt" style="margin-bottom:0px"></label>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            Escaped Particles
+                        </td>
+                        <td>
+                            <div id="d1" style="width:10px;height:10px;border-radius: 5px;margin: 5px 10px 03px 10px;background: #FFFF00;">
+                            </div>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <td>
+                            Withered Particles
+                        </td>
+                        <td>
+                            <div id="d1" style="width:10px;height:10px;border-radius: 5px;margin: 5px 10px 03px 10px;background: rgba(255, 255, 255, 0.3);">
+                            </div>
+                        </td>
+                        <td>
+                            <label id="p4_cnt" style="margin-bottom:0px"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Cluster Particles
+                        </td>
+                        <td>
+                            <div id="d1" style="width:10px;height:10px;border-radius: 5px;margin: 5px 10px 03px 10px;background: #FF0000;">
+                            </div>
+                        </td>
+                        <td>
+                            <label id="p5_cnt" style="margin-bottom:0px"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="menu-text"></div>
+        </div>
+        <!-- <canvas id="windycanvas" style="position: fixed; pointer-events: none; z-index: 10; top: 0;"></canvas>
+        <canvas id="pcolorcanvas" style="position: fixed; pointer-events: none; z-index: 10; top: 0;"></canvas> -->
+        <canvas id="kdecanvas" style="position: fixed; pointer-events: none; z-index: 10; top: 0; "></canvas>
+    </div>
+    </div>
+
+    <!--业务代码-->
+    <script src="js/ex/featureViewer.js"></script>
+    <script src="data/urlConfig.js"></script>
+    <script src="js/index.js?time=20190418"></script>
+</body>
+
+</html>

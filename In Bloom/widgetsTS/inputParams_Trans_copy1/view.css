@@ -1,0 +1,61 @@
+﻿#myBar {
+    width: 0%;
+    height: 30px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}
+
+table {
+    border-collapse: collapse;
+    /*边框合并模式*/
+    text-align: center;
+}
+
+td,
+th {
+    white-space: nowrap;
+    overflow: hidden;
+    word-break: keep-all;
+}
+
+table,
+td {
+    font: 100% Arial, Helvetica, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    text-align: left;
+    padding: .5em;
+}
+
+select {
+    background: rgba(63, 72, 84, 0.6);
+    color: rgb(255, 255, 255);
+    width: 150px;
+}
+
+option {
+    color: rgb(255, 255, 255)
+}
+
+button {
+    color: white;
+}
+
+.numinput {
+    width: 150px;
+}
+
+input {
+    width: 150px;
+}
+
+input[type="checkbox"]{ 
+    width: 10px;
+}

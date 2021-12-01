@@ -1,0 +1,134 @@
+﻿{
+    "defpage": "../map.html",
+    "menu": [
+        {
+            "name": "首页",
+            "icon": "fa fa-home",
+            "calback": "mars3d.widget.disableAll()"
+        },
+        {
+            "name": "基础地理",
+            "icon": "fa fa-eye",
+            "children": [
+                {
+                    "name": "地理信息",
+                    "icon": "fa fa-university",
+                    "children": [
+                        {
+                            "name": "基础地理",
+                            "uri": "widgetsTS/qyPoint/widget.js"
+                        },
+                        {
+                            "name": "观测体系",
+                            "uri": "widgetsTS/queryByWhere/widget.js"
+                        },
+                        {
+                            "name": "三维场景",
+                            "uri": "widgetsTS/localTerrein/widget.js"
+                        }
+                    ]
+                },
+                {
+                    "name": "基础工具",
+                    "icon": "fa fa-ship",
+                    "children": [
+                        {
+                            "name": "空间查询",
+                            "uri": "widgets/showLayer/widget.js?type=306011",
+                            "layerId": 306011
+                        },
+                        {
+                            "name": "图形绘制",
+                            "uri": "widgets/showLayer/widget.js?type=306012",
+                            "layerId": 306012
+                        },
+                        {
+                            "name": "空间分析",
+                            "uri": "widgets/showLayer/widget.js?type=306012",
+                            "layerId": 306012
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "数值预报",
+            "icon": "fa fa-building",
+            "children": [
+                {
+                    "name": "流场",
+                    "icon": "fa fa-folder-o",
+                    "children": [
+                        {
+                            "name": "流场可视化",
+                            "uri": "widgetsTS/show_current/widget.js?type=204011",
+                            "layerId": 204011
+                        }
+                    ]
+                },
+                {
+                    "name": "管网",
+                    "icon": "fa fa-random",
+                    "children": [
+                        {
+                            "name": "矢量管网",
+                            "uri": "widgetsTS/pipeline/widget.js"
+                        },
+                        {
+                            "name": "模型管网",
+                            "uri": "widgets/showLayer/widget.js?type=205010",
+                            "layerId": 205010
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "运移模拟",
+            "icon": "fa fa-area-chart",
+            "children": [
+                {
+                    "name": "拉格朗日模拟",
+                    "icon": "fa fa-folder-o",
+                    "children": [
+                        {
+                            "name": "水面目标",
+                            "uri": "widgetsTS/sgmn/widget.js"
+                        }
+                    ]
+                },
+                {
+                    "name": "fbm模拟",
+                    "icon": "fa fa-folder-o",
+                    "children": [
+                        {
+                            "name": "含水层",
+                            "uri": "widgetsTS/ts_showView/widget1.js"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "粒子追踪",
+            "icon": "fa fa-area-chart",
+            "children": [
+                {
+                    "name": "粒子追踪",
+                    "icon": "fa fa-folder-o",
+                    "children": [
+                        {
+                            "name": "水面目标",
+                            "uri": "widgetsTS/sgmn/widget.js"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "系统管理",
+            "icon": "fa fa-cog",
+            "uri": "http://www.marsgis.cn/ui/index2.html#!./page/system/menu/index.html"
+        }
+    ]
+}
